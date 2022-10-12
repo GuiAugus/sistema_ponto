@@ -85,9 +85,32 @@ class usuario:
             formatacao_nome = 15 -  len(linha[1])
             print(f"Nome: {linha[1]}  " + " " * formatacao_nome, end='')
             
-            cpf = '{}.{}.{}-{}'.format(linha[2][:3], linha[2][3:6], linha[2][6:9], linha[2][9:])
+            cpf = (f'{linha[2][:3]}.{linha[2][3:6]}.{linha[2][6:9]}-{linha[2][9:]}')
             print(f"CPF: {cpf}")
             
+    def historico_usuario_db():
+        usuario.mostrar_usuarios_db()
+
+        resposta = str(input("Escolha o usuário que quer analisar o histórico: "))
+        declaracao = (f"""select usuario.nome, registro.entrada, registro.saida
+                        from usuario
+                        inner join registro
+                        on usuario.id_usuario = registro.id_usuario
+                        where usuario.id_usuario = '{resposta}';""")
+        consulta_sql = declaracao
+
+        database.conectar_db()
+        cursor = con.cursor()
+        cursor.execute(consulta_sql)
+        linhas = cursor.fetchall()
+
+        nome = linhas[0][0]        
+        print(f"Nome do Usuário: {nome}")
+        
+        for linha in linhas:
+            data_entrada = linha[1].strftime(f"Data: {'%d-%m-%Y'} Horario: {'%H:%M:%S'}")
+            print(data_entrada)
+
 
 class registro():
     
