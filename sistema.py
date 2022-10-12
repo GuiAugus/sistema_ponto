@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from bancodedados import database, usuario
+from bancodedados import database, registro, usuario
 
 
 def menu():
@@ -25,13 +25,11 @@ def menu():
         
 
 def entrada():
-    resposta = input("deseja dar entrada? ")
+    resposta = input("deseja dar entrada? Digite [1] para continuar: ")
     print(resposta)
     while resposta != '1':
         resposta = (input("Valor desejado inválido, por favor digitar novamente: "))
-    hora = datetime.now()
-    hora_correta = hora.strftime('%H:%M %d/%m/%Y')
-    print(f"Entrada com sucesso: {hora_correta}")
+    registro.entrada(registro)
 
 def saida():
     resposta = input("Deseja dar saída?")

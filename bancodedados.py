@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import mysql.connector
 
 con = mysql.connector.connect(host='localhost', database='sistemaponto', user='root', password='')
@@ -41,6 +43,30 @@ class usuario:
         inserir_sql = declaracao
         print(inserir_sql)
 
+        cursor = con.cursor()
+        cursor.execute(inserir_sql)
+        con.commit
+        database.desconectar_db()
+
+class registro():
+    
+    def __init__(self, registro, nome, cpf, entrada, saida):
+        self.registro = registro
+        self.nome = nome
+        self.cpf = cpf
+        self.entrada = entrada
+        self.saida = saida
+
+
+    def entrada(registro):
+        registro = str(input("Digite a matrícula do usuário: "))
+        hora = datetime.now()
+        hora_correta = hora.strftime('%Y-%m-%d %H:%M:%S')
+        declaracao = f"""insert into registro values
+        (id_registro, '{registro}', '{hora_correta}', null); """
+        inserir_sql = declaracao
+
+        database.conectar_db()
         cursor = con.cursor()
         cursor.execute(inserir_sql)
         con.commit
