@@ -50,23 +50,7 @@ class usuario:
 
     def deletar_usuario_db():
 
-        declaracao = """select id_usuario, nome, cpf from usuario;"""
-        consulta_sql = declaracao
-        print(consulta_sql)
-
-        database.conectar_db()
-        cursor = con.cursor()
-        cursor.execute(consulta_sql)
-        linhas = cursor.fetchall()
-
-        for linha in linhas:
-            print(f"Matricula: {linha[0]} | ", end='')
-
-            formatacao_nome = 15 -  len(linha[1])
-            print(f"Nome: {linha[1]}  " + " " * formatacao_nome, end='')
-            
-            cpf = '{}.{}.{}-{}'.format(linha[2][:3], linha[2][3:6], linha[2][6:9], linha[2][9:])
-            print(f"CPF: {cpf}")
+        usuario.mostrar_usuarios_db()
 
         escolha_delete = str(input("Digite o registro do usuário que deseja dar saída: "))
         
@@ -84,6 +68,26 @@ class usuario:
 
         cursor = con.cursor()
         cursor.execute(inserir_sql)
+
+    def mostrar_usuarios_db():
+        declaracao = """select id_usuario, nome, cpf from usuario;"""
+        consulta_sql = declaracao
+        print(consulta_sql)
+
+        database.conectar_db()
+        cursor = con.cursor()
+        cursor.execute(consulta_sql)
+        linhas = cursor.fetchall()
+
+        for linha in linhas:
+            print(f"Matricula: {linha[0]} | ", end='')
+
+            formatacao_nome = 15 -  len(linha[1])
+            print(f"Nome: {linha[1]}  " + " " * formatacao_nome, end='')
+            
+            cpf = '{}.{}.{}-{}'.format(linha[2][:3], linha[2][3:6], linha[2][6:9], linha[2][9:])
+            print(f"CPF: {cpf}")
+            
 
 class registro():
     
@@ -142,5 +146,3 @@ class registro():
         cursor.execute(inserir_sql)
         print(f"Saida do usuário foi um sucesso")
         con.commit()
-
-usuario.deletar_usuario_db()

@@ -11,6 +11,7 @@ def menu():
     Digite [3] para criar um novo usuário.
     Digite [4] para excluir um usuário.
     Digite [5] para consultar o histórico de algum usuário.
+    Digite [6] para consultar o registro dos usuários.
     """)
     while True:
         resposta = input("Digite aqui sua opcão: ")
@@ -25,6 +26,9 @@ def menu():
         
         if resposta == '4':
             deletar_usuario_menu()
+
+        if resposta == '6':
+            mostrar_usuarios_menu()
 
         elif resposta == '99':
             print("finalizando aplicacao")
@@ -68,9 +72,9 @@ def deletar_usuario_menu():
         usuario.deletar_usuario_db()
     menu()
 
+def mostrar_usuarios_menu():
+    usuario.mostrar_usuarios_db()
+    menu()
+
+
 menu()
-
-        
-
-
-
