@@ -4,7 +4,8 @@ from bancodedados import database, registro, usuario
 
 
 def menu():
-    print("""Olá, bem vindo ao sistema de ponto eletronico.
+    print("""
+    Olá, bem vindo ao sistema de ponto eletronico.
     Digite [1] para dar entrada no sistema.
     Digite [2] para dar saída no sistema.
     Digite [3] para criar um novo usuário.
@@ -14,7 +15,10 @@ def menu():
     while True:
         resposta = input("Digite aqui sua opcão: ")
         if resposta == '1':
-            entrada()
+            entrada_menu()
+
+        if resposta == '2':
+            saida_menu()    
         
         if resposta =='3':
             criar_usuario()
@@ -24,21 +28,21 @@ def menu():
             break
         
 
-def entrada():
+def entrada_menu():
     resposta = input("deseja dar entrada? Digite [1] para continuar: ")
     print(resposta)
     while resposta != '1':
         resposta = (input("Valor desejado inválido, por favor digitar novamente: "))
-    registro.entrada(registro)
+    registro.entrada_db(registro)
+    menu()
 
-def saida():
-    resposta = input("Deseja dar saída?")
+def saida_menu():
+    resposta = input("Deseja dar saída? Digite [1] para continuar: ")
     print(resposta)
     while resposta != '1':
         resposta = input("Valor desejado inválido, por favor digitar novamente: ")
-    hora = datetime.now()
-    hora_correta = hora.strftime('%H:%M %d/%m/%Y')
-    print(f"Saída com sucesso: {hora_correta}")
+    registro.saida_db(registro)
+    menu()
 
 def criar_usuario():
     resposta = input("Deseja criar um usuario? Digite [1] para continuar: ")
@@ -52,13 +56,8 @@ def criar_usuario():
             print("Usuario criado com sucesso")
 
         except:
-            print("Houve algum erro, tente novamente")
-
-        resposta = (input("Deseja adicionar mais um usuário? Se sim digite [1]. Caso não deseje digite [0]: "))
-        if resposta == '0':
-            menu()
-        elif resposta != '1':
-            resposta = input("Valor desejado inválido, por favor digitar novamente: ")
+            print("Houve algum erro ao tentar criar o usuário, tente novamente")
+        menu()
 
 
 menu()
