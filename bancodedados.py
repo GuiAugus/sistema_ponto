@@ -15,7 +15,7 @@ class database:
             cursor.execute("select database ();")
             linha = cursor.fetchone()
             print(f"Conectado ao bando de dados {linha}")
-
+            
     def desconectar_db():
         if con.is_connected():
             cursor = con.cursor()
@@ -33,7 +33,7 @@ class usuario:
         pass
  
 
-    def criar_usuario(nome, cpf):
+    def criar_usuario_db(nome, cpf):
         nome = nome
         cpf = cpf
 
@@ -47,6 +47,43 @@ class usuario:
         cursor.execute(inserir_sql)
         con.commit
         database.desconectar_db()
+
+    def deletar_usuario_db():
+
+        declaracao = """select id_usuario, nome, cpf from usuario;"""
+        consulta_sql = declaracao
+        print(consulta_sql)
+
+        database.conectar_db()
+        cursor = con.cursor()
+        cursor.execute(consulta_sql)
+        linhas = cursor.fetchall()
+
+        for linha in linhas:
+            print(f"Matricula: {linha[0]} | ", end='')
+
+            formatacao_nome = 15 -  len(linha[1])
+            print(f"Nome: {linha[1]}  " + " " * formatacao_nome, end='')
+            
+            cpf = '{}.{}.{}-{}'.format(linha[2][:3], linha[2][3:6], linha[2][6:9], linha[2][9:])
+            print(f"CPF: {cpf}")
+
+        escolha_delete = str(input("Digite o registro do usuário que deseja dar saída: "))
+        
+        try:            
+            declaracao = f"""delete from usuario
+            where id_usuario = '{escolha_delete}';
+            
+            delete from registro
+            where id_usuario = '{escolha_delete}';"""
+            inserir_sql = declaracao
+            print("Usuario deletado com sucesso")
+
+        except:
+            print("Houve algum erro ao tentar deletar o usuário, tente novamente.")
+
+        cursor = con.cursor()
+        cursor.execute(inserir_sql)
 
 class registro():
     
@@ -71,6 +108,7 @@ class registro():
         cursor.execute(inserir_sql)
         con.commit
         database.desconectar_db()
+        print("Entrada do usuário com sucesso")
 
     def saida_db(registro):
         declaracao = """select usuario.id_usuario, usuario.nome, registro.entrada,  registro.id_registro 
@@ -80,7 +118,7 @@ class registro():
         where registro.saida is null;"""
         hora = datetime.now()
         hora_correta = hora.strftime('%Y-%m-%d %H:%M:%S')
-        print(declaracao)
+
         consulta_sql = declaracao
 
         database.conectar_db()
@@ -105,4 +143,4 @@ class registro():
         print(f"Saida do usuário foi um sucesso")
         con.commit()
 
-
+usuario.deletar_usuario_db()

@@ -21,7 +21,10 @@ def menu():
             saida_menu()    
         
         if resposta =='3':
-            criar_usuario()
+            criar_usuario_menu()
+        
+        if resposta == '4':
+            deletar_usuario_menu()
 
         elif resposta == '99':
             print("finalizando aplicacao")
@@ -44,7 +47,7 @@ def saida_menu():
     registro.saida_db(registro)
     menu()
 
-def criar_usuario():
+def criar_usuario_menu():
     resposta = input("Deseja criar um usuario? Digite [1] para continuar: ")
     while resposta == '1':
         nome = str(input("Digite o nome do usuario: "))
@@ -52,13 +55,18 @@ def criar_usuario():
         print(nome, cpf)
 
         try: 
-            usuario.criar_usuario(nome, cpf)
+            usuario.criar_usuario_db(nome, cpf)
             print("Usuario criado com sucesso")
 
         except:
             print("Houve algum erro ao tentar criar o usuário, tente novamente")
         menu()
 
+def deletar_usuario_menu():
+    resposta = input("Deseja deletar um usuario? Digite [1] para continuar: ")
+    while resposta == '1':
+        usuario.deletar_usuario_db()
+    menu()
 
 menu()
 
