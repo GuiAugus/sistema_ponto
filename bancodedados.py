@@ -5,7 +5,7 @@ import mysql.connector
 con = mysql.connector.connect(host='localhost', database='sistemaponto', user='root', password='')
 
 class database:
-    def definir_database():
+    def definir_database(con):
         con = mysql.connector.connect(host='localhost', database='sistemaponto', user='root', password='')
 
     def conectar_db():

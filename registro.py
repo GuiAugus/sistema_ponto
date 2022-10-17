@@ -3,7 +3,6 @@ from datetime import datetime
 import mysql.connector
 
 from bancodedados import database
-from menu import menu
 
 con = mysql.connector.connect(host='localhost', database='sistemaponto', user='root', password='')
    
@@ -30,8 +29,6 @@ class registro():
         con.commit
         database.desconectar_db()
         print("Entrada do usuário com sucesso")
-
-        menu.menu()
 
     def saida_db(registro):
         declaracao = """select usuario.id_usuario, usuario.nome, registro.entrada,  registro.id_registro 
@@ -65,5 +62,3 @@ class registro():
         cursor.execute(inserir_sql)
         print(f"Saida do usuário foi um sucesso")
         con.commit()
-
-        menu.menu()

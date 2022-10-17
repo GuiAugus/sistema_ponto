@@ -1,7 +1,6 @@
 import mysql.connector
 
 from bancodedados import database
-from menu import menu
 
 con = mysql.connector.connect(host='localhost', database='sistemaponto', user='root', password='')
 
@@ -24,7 +23,6 @@ class usuario_menu:
             except:
                 print("Houve algum erro ao tentar criar o usuário, tente novamente")
 
-        menu.menu()
 
     
 
@@ -32,16 +30,12 @@ class usuario_menu:
         resposta = input("Deseja deletar um usuario? Digite [1] para continuar: ")
         while resposta == '1':
             usuario_database.deletar_usuario_db()
-        menu.menu()
 
     def mostrar_usuarios_menu():
         usuario_database.mostrar_usuarios_db()
-        menu.menu()
 
     def mostrar_historico_usuario_menu():
         usuario_database.historico_usuario_db()
-        menu.menu()
-
 
 
 class usuario_database:

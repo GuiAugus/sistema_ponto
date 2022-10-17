@@ -4,12 +4,10 @@ from bancodedados import database
 from registro import registro
 from usuario import usuario_menu
 
-con = mysql.connector.connect(host='localhost', database='sistemaponto', user='root', password='')
 
 class menu:
     def menu():
-        database.definir_database()
-        print("""
+        hub_menu = ("""
         Olá, bem vindo ao sistema de ponto eletronico.
         Digite [1] para dar entrada no sistema.
         Digite [2] para dar saída no sistema.
@@ -19,30 +17,38 @@ class menu:
         Digite [6] para consultar o registro dos usuários.
         Digite [99] para finalizar a aplicacão.
         """)
+
+        print(hub_menu)
         while True:
             resposta = input("Digite aqui sua opcão: ")
             if resposta == '1':
                 entrada_menu()
+                print(hub_menu)
 
             if resposta == '2':
-                saida_menu()    
+                saida_menu()
+                print(hub_menu)
             
             if resposta =='3':
                 usuario_menu.criar_usuario_menu()
+                print(hub_menu)
             
             if resposta == '4':
                 usuario_menu.deletar_usuario_menu()
+                print(hub_menu)
 
             if resposta == '5':
                 usuario_menu.mostrar_historico_usuario_menu()
+                print(hub_menu)
 
             if resposta == '6':
                 usuario_menu.mostrar_usuarios_menu()
+                print(hub_menu)
 
             elif resposta == '99':
                 print("finalizando aplicacao")
                 break
-        
+
 
 def entrada_menu():
     resposta = input("deseja dar entrada? Digite [1] para continuar: ")
@@ -58,4 +64,3 @@ def saida_menu():
     while resposta != '1':
         resposta = input("Valor desejado inválido, por favor digitar novamente: ")
     registro.saida_db(registro)
-    menu()
